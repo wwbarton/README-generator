@@ -1,7 +1,7 @@
-const generateMarkdown = require("./generateMarkdown");
 const fs = require("fs");
 const inquirer = require("inquirer");
-const util = requir("util");
+const util = require("util");
+const generatorMarkdown = require("./utils/generateMarkdown");
 // questions to ask the user //
 
 const questions = [
@@ -15,7 +15,7 @@ const questions = [
     type: "input",
     message:
       "Provide a short description explaining the what, why, and how of your project by asking: 'What was your motivation?', 'Why did you build this project?', 'What problem does it solve?' and 'What did you learn?'",
-    name: "Description",
+    name: "description",
   },
   {
     type: "input",
@@ -35,8 +35,8 @@ const questions = [
   },
   {
     type: "input",
-    message: "Are there contributors? If yes, add them.",
-    name: "contributors",
+    message: "Contribution guidelines? If yes, add them.",
+    name: "contributing",
   },
   {
     type: "input",
@@ -46,7 +46,7 @@ const questions = [
   {
     type: "input",
     message: "Info for pertaining questions.",
-    name: "questions",
+    name: "Questions",
   },
   {
     type: "input",
@@ -61,7 +61,7 @@ const questions = [
 ];
 
 function writeToFile(fileName, data) {
-  fs.writefile(fileName, data, function (err) {
+  fs.writeFile(fileName, data, function (err) {
     console.log(fileName);
     console.log(data);
     if (err) {
@@ -74,7 +74,7 @@ function writeToFile(fileName, data) {
 
 function init() {
   inquirer.prompt(questions).then(function (data) {
-    writeToFile("README.md", gereratorMarkdown(data));
+    writeToFile("README.md", generatorMarkdown(data));
     console.log(data);
   });
 }

@@ -1,33 +1,30 @@
-var fileGenerator = require("./fileGenerator");
-var fs = require("fs");
-var inquirer = require("inquirer");
-
+const generateMarkdown = require("./generateMarkdown");
+const fs = require("fs");
+const inquirer = require("inquirer");
+const util = requir("util");
 // questions to ask the user //
-let questions = [
+const questions = [
   {
     type: "input",
-    message: "What is the title of your repository?",
-    name: "title",
+    message: "What is the title of your project?",
+    name: "Title",
+  },
+
+  {
+    type: "input",
+    message:
+      "Provide a short description explaining the what, why, and how of your project by asking: 'What was your motivation?', 'Why did you build this project?', 'What problem does it solve?' and 'What did you learn?'",
+    name: "Description",
   },
   {
     type: "input",
-    message: "Please give your logo information.",
-    name: "logo",
+    message: "What is needed for installation to make this run?",
+    name: "Installation",
   },
   {
     type: "input",
-    message: "What is your GitHub user name?",
-    name: "userName",
-  },
-  {
-    type: "input",
-    message: "Please give your GitHub profile link.",
-    name: "GitHub",
-  },
-  {
-    type: "input",
-    message: "What is your email?",
-    name: "email",
+    message: "How is this used? Provide instructions",
+    name: "Usage",
   },
   {
     type: "list",
@@ -37,71 +34,37 @@ let questions = [
   },
   {
     type: "input",
-    message: "Please describe the repository.",
-    name: "description",
+    message: "Are there contributors? If yes, add them.",
+    name: "contributors",
   },
   {
     type: "input",
-    message: "Please state if others can contribute.",
-    name: "contribute",
+    message: "What is needed to fufil tests?",
+    name: "tests",
   },
   {
     type: "input",
-    message: "Please state any test(s) require (1/3).",
-    name: "test",
+    message: "Info for pertaining questions.",
+    name: "questions",
   },
   {
     type: "input",
-    message: "Please state any test(s) require(2/3).",
-    name: "test2",
+    message: "What is your username for Github?",
+    name: "username",
   },
   {
     type: "input",
-    message: "Please state any test(s) require (3/3).",
-    name: "test3",
+    message: "what is your email?",
+    name: "email",
   },
-  {
-    type: "input",
-    message: "State your accomplishments.",
-    name: "accomplish",
-  },
-  {
-    type: "input",
-    message: "Please state provide a screenshot (1 of 3).",
-    name: "scriptjs",
-  },
-  {
-    type: "input",
-    message: "Please state provide a screenshot (2 of 3).",
-    name: "fileGnerator",
-  },
-  {
-    type: "input",
-    message: "Please state provide a screenshot (3 of 3).",
-    name: "ReadMe",
-  },
-  {
-    type: "input",
-    message: "Please supply two references (1/2).",
-    name: "ref1",
-  },
-  {
-    type: "input",
-    message: "Please supply two references (2/2).",
-    name: "ref2",
-  },
-  {
-    type: "input",
-    message: "Please state your end-goal.",
-    name: "endgoal",
-  },
+  
 ];
 
 // Function to write to my ReadMe.md file. //
-inquirer.prompt(questions).then(function (response) {
-  console.log(response);
+// inquirer.prompt(questions).then(function (response) {
+//   console.log(response);
 
-  var content = fileGenerator(response);
+  var content = generateMarkdown(response);
   console.log(content);
   fs.writeFile("./ReadMe.md", content, function (err) {
     if (err) throw err;

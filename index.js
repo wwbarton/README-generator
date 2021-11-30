@@ -3,6 +3,7 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const util = requir("util");
 // questions to ask the user //
+
 const questions = [
   {
     type: "input",
@@ -19,12 +20,12 @@ const questions = [
   {
     type: "input",
     message: "What is needed for installation to make this run?",
-    name: "Installation",
+    name: "installation",
   },
   {
     type: "input",
     message: "How is this used? Provide instructions",
-    name: "Usage",
+    name: "usage",
   },
   {
     type: "list",
@@ -57,17 +58,25 @@ const questions = [
     message: "what is your email?",
     name: "email",
   },
-  
 ];
 
-// Function to write to my ReadMe.md file. //
-// inquirer.prompt(questions).then(function (response) {
-//   console.log(response);
-
-  var content = generateMarkdown(response);
-  console.log(content);
-  fs.writeFile("./ReadMe.md", content, function (err) {
-    if (err) throw err;
-    console.log("success");
+function writeToFile(fileName, data) {
+  fs.writefile(fileName, data, function (err) {
+    console.log(fileName);
+    console.log(data);
+    if (err) {
+      return console.log(err);
+    } else {
+      console.log("success");
+    }
   });
-});
+}
+
+function init() {
+  inquirer.prompt(questions).then(function (data) {
+    writeToFile("README.md", gereratorMarkdown(data));
+    console.log(data);
+  });
+}
+
+init();
